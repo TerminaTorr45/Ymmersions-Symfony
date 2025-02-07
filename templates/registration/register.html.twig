@@ -1,19 +1,83 @@
+{# templates/registration/register.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: url('{{ asset('images/background.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 450px;
+    }
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 1em;
+        color: #ff9900;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+        font-weight: bold;
+    }
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border 0.3s;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 5px;
+        background-color: #007bff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 10px;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
 
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
+<div class="container">
+    <h1>Inscription</h1>
+    {{ form_start(registrationForm, {'attr': {'class': 'form-group'}}) }}
+        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+        {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+        {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-control'}}) }}
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

@@ -4,18 +4,26 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        // Vérifie si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            // Redirige vers la page admin si l'utilisateur a le rôle ROLE_ADMIN
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+                return new RedirectResponse($this->generateUrl('admin_dashboard'));
+            }
+            // Sinon, redirige vers la page par défaut
+            return new RedirectResponse($this->generateUrl('app_dashboard'));
+        }
 
-        // last username entered by the user
+        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [

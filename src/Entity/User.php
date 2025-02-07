@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,7 +31,13 @@ class User implements UserInterface
     #[ORM\Column(type: "json")]
     private array $roles = [];
 
-    // Méthodes pour accéder aux données de l'utilisateur
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Team::class, cascade: ['persist', 'remove'])]
+    private Collection $teams;
+
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,7 +79,7 @@ class User implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles ?: ['ROLE_USER']; // Définit un rôle par défaut si aucun rôle n'est défini
+        return $this->roles ?: ['ROLE_USER'];
     }
 
     public function setRoles(array $roles): static
@@ -79,15 +88,51 @@ class User implements UserInterface
         return $this;
     }
 
-    // Implémentation de la méthode pour obtenir l'identifiant de l'utilisateur (email dans ce cas)
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
 
-    // Si l'utilisateur stocke des informations sensibles (ex. token de réinitialisation de mot de passe), les effacer ici.
     public function eraseCredentials(): void
     {
-        // Pas de données sensibles à effacer dans cet exemple
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->email;
+    }
+
+    /** 
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): static
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): static
+    {
+        if ($this->teams->removeElement($team)) {
+            if ($team->getOwner() === $this) {
+                $team->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }

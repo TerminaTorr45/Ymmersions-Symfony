@@ -1,0 +1,66 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur notre site de gestion de tournois de foot!{% endblock %}
+
+{% block body %}
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: url('{{ asset('images/background.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+    }
+    .container {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+        color: #ff9900;
+    }
+    p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    .buttons {
+        margin-top: 20px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 5px;
+        margin: 10px;
+        transition: background 0.3s, transform 0.3s;
+    }
+    .btn-primary {
+        background-color: #ff9900;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="container">
+    <h1>Bienvenue sur notre site de gestion de tournois de foot !</h1>  
+    <div class="buttons">
+        <a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
+        <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar {
+        background-color:rgb(215, 114, 25);
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+    .navbar img {
+        height: 60px; /* Ajustez la hauteur selon vos besoins */
+        width: auto;  /* Conserve les proportions de l'image */
+        margin-right: 10px;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background 0.3s;
+    }
+    .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<!-- Navbar -->
+<div class="navbar">
+    <img src="{{ asset('images/logo.png') }}" alt="Logo">
+    <h2>Mon Profil</h2>
+    <div>
+        <a href="{{ path('app_dashboard') }}" class="btn">Retour</a>
+    </div>
+</div>
+
+<!-- Contenu du Profil -->
+<div class="container">
+    <h3>Modifier mon Profil</h3>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+      
+    {{ form_end(form) }}
+</div>
+{% endblock %}

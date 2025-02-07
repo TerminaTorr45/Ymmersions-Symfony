@@ -17,6 +17,10 @@ class Team
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Tournament $tournament = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +34,17 @@ class Team
     public function setTournament(?Tournament $tournament): static
     {
         $this->tournament = $tournament;
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
         return $this;
     }
 }
