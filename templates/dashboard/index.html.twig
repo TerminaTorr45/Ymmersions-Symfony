@@ -74,6 +74,8 @@
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('admin_dashboard') }}" style="background-color: #d9534f;">Admin</a>
         {% endif %}
+        <a href="{{ path('app_profil_view') }}" class="btn">Voir mon profil</a>
+        <a href="{{ path('app_team_list') }}" class="btn">Voir toutes les équipes</a>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
     </div>
 </div>

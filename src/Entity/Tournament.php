@@ -46,6 +46,7 @@ class Tournament
     }
 
     // Getters & Setters
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,5 +154,10 @@ class Tournament
             }
         }
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

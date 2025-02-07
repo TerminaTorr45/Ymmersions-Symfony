@@ -2,6 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
+use App\Entity\Tournament;
+use App\Entity\Team;
+use App\Entity\Participation;
+use App\Entity\Game;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -30,5 +35,12 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('Tournois', 'fa fa-trophy', Tournament::class);
+        yield MenuItem::linkToCrud('Équipes', 'fa fa-users', Team::class); 
+        yield MenuItem::linkToCrud('Participations', 'fa fa-calendar', Participation::class);
+        yield MenuItem::linkToCrud('Matchs', 'fa fa-futbol', Game::class); 
+
+
+
     }
 }

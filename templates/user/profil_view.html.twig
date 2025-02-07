@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar {
+        background-color: rgb(215, 114, 25);
+        padding: 15px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: white;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background 0.3s;
+    }
+    .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: rgb(215, 114, 25);
+    }
+    h2 {
+        font-size: 2rem;
+        margin-top: 20px;
+        font-weight: 500;
+        color: #444;
+    }
+    .profile-info {
+        text-align: left;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+    .profile-info p {
+        margin-bottom: 10px;
+    }
+    .profile-info strong {
+        color: rgb(215, 114, 25);
+    }
+    .teams-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 20px;
+        text-align: left;
+    }
+    .teams-list li {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+    .teams-list li strong {
+        font-size: 1.1rem;
+    }
+    .btn {
+        padding: 12px 24px;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    .btn-secondary {
+        background-color: rgb(215, 114, 25);
+        border: none;
+        color: white;
+    }
+    .btn-secondary:hover {
+        background-color: #d9534f;
+    }
+</style>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="{{ path('app_dashboard') }}" class="btn btn-secondary">Retour</a>
+</div>
+
+<!-- Contenu du Profil -->
+<div class="container">
+    <h1>Mon Profil</h1>
+
+    <!-- Informations de l'utilisateur -->
+    <div class="profile-info">
+        <p><strong>Nom :</strong> {{ user.name }}</p>
+        <p><strong>Email :</strong> {{ user.email }}</p>
+        <p><strong>Rôle :</strong> {{ user.roles|join(', ') }}</p>
+    </div>
+
+    <!-- Affichage des équipes créées -->
+    <h2>Mes équipes</h2>
+    {% if user.teams is not empty %}
+        <ul class="teams-list">
+            {% for team in user.teams %}
+                <li>
+                    <strong>{{ team.name }}</strong>
+                    {% if team.tournament %}
+                        - Tournoi : {{ team.tournament.name }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez créé aucune équipe.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

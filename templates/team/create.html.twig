@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une équipe{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar {
+        background-color: rgb(215, 114, 25);
+        padding: 15px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: white;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background 0.3s;
+    }
+    .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: rgb(215, 114, 25);
+    }
+    .btn {
+        padding: 12px 24px;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    .btn-primary {
+        background-color: rgb(215, 114, 25);
+        border: none;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #d9534f;
+    }
+    .form-row {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .form-row label {
+        font-weight: 600;
+        color: #444;
+    }
+    .alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="{{ path('app_team_list') }}" class="btn btn-secondary">Retour à la Liste des Équipes</a>
+</div>
+
+<!-- Formulaire de création d'équipe -->
+<div class="container">
+    <h1>Créer une équipe</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="form-row">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-row">
+            {{ form_label(form.tournament) }}
+            {{ form_widget(form.tournament) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Créer l'équipe</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
